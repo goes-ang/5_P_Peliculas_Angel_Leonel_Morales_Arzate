@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Recomendador de películas</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      padding: 30px 15px;
+      color: #fff;
+      text-align: center;
+      background: linear-gradient(135deg, #5b1a8c, #c2188f, #ff00aa);
+    }
+
+    h1 {
+      margin: 0 0 25px;
+      font-size: 1.8em;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+    }
+
+    .caja {
+      background: rgba(255, 255, 255, 0.15);
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(6px);
+      padding: 25px;
+      border-radius: 20px;
+      max-width: 520px;
+      margin: 0 auto;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+    }
+
+    h3 {
+      margin: 10px 0;
+      letter-spacing: 3px;
+    }
+
+    p { line-height: 1.5; }
+
+    label {
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+
+    input {
+      padding: 10px;
+      width: 100px;
+      margin-left: 8px;
+      border-radius: 25px;
+      border: 2px solid #ffd0f0;
+      text-align: center;
+      font-size: 1em;
+      outline: none;
+    }
+
+    input:focus { border-color: #fff; }
+
+    .botones {
+      margin: 20px 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    button {
+      padding: 12px;
+      font-weight: bold;
+      font-size: 1em;
+      border: none;
+      border-radius: 25px;
+      background: linear-gradient(90deg, #ffffff, #ffd0f0);
+      color: #5b1a8c;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.35);
+    }
+
+    #error {
+      color: #ff3838;
+      font-weight: bold;
+      min-height: 20px;
+    }
+
+    .resultado-caja {
+      background: rgba(0, 0, 0, 0.35);
+      border-radius: 15px;
+      padding: 15px;
+      margin-top: 10px;
+    }
+
+    #resultado {
+      font-size: 1.6em;
+      font-weight: bold;
+      color: #ffd0f0;
+      margin: 5px 0 0;
+      min-height: 35px;
+    }
+  </style>
+</head>
+<body>
+  <h1> Bienvenido al cine de Angel Leonel Morales Arzate 🎬</h1>
+
+  <div class="caja">
+    <h3>MENnU</h3>
+    <p>Ingresa tu edad y selecciona el género que más te guste, y te dare una pequeña recomendacion</p>
+
+    <label>Edad: <input type="number" id="edad" min="2"></label>
+
+    <div class="botones">
+      <button onclick="recomendar('Drama')">🎭 Drama</button>
+      <button onclick="recomendar('Comedia')">😂 Comedia</button>
+      <button onclick="recomendar('Musical')">🎵 Musical</button>
+      <button onclick="recomendar('Crimen')">🕵️ Crimen</button>
+    </div>
+
+    <p id="error"></p>
+
+    <div class="resultado-caja">
+      <h3>Nuestra recomendación:</h3>
+      <p id="resultado"></p>
+    </div>
+  </div>
+
+  <script>
+    let peliculas = null;
+
+
+    fetch("peliculas.json")
+      .then(r => r.json())
+      .then(datos => { peliculas = datos; })
+      .catch(() => {
+        document.getElementById("error").textContent =
+          "No se pudo cargar peliculas.json.";
+      });
+
+    function rangoDeEdad(edad) {
+      if (edad >= 2 && edad <= 12) return "2-12";
+      if (edad >= 13 && edad <= 17) return "13-17";
+      if (edad >= 18) return "18+";
+      return null;
+    }
+
+    function recomendar(genero) {
+      const error = document.getElementById("error");
+      const resultado = document.getElementById("resultado");
+      error.textContent = "";
+      resultado.textContent = "";
+
+      if (!peliculas) {
+        error.textContent = "La base de datos aún no está cargada.";
+        return;
+      }
+
+      const edad = parseInt(document.getElementById("edad").value);
+      const rango = rangoDeEdad(edad);
+
+      if (!rango) {
+        error.textContent = "Ingresa una edad válida (2 años o más).";
+        return;
+      }
+
+      const lista = peliculas[rango][genero];
+      resultado.textContent = lista[Math.floor(Math.random() * lista.length)];
+    }
+  </script>
+</body>
+</html>

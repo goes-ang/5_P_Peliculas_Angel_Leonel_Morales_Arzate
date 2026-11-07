@@ -1,0 +1,20 @@
+{
+  "2-12": {
+    "Drama": ["El rey león", "Coco", "Intensamente"],
+    "Comedia": ["Shrek", "Toy Story", "Mi villano favorito"],
+    "Musical": ["Encanto", "Moana", "Frozen"],
+    "Crimen": ["Zootrópolis", "Scooby-Doo", "Los Increíbles"]
+  },
+  "13-17": {
+    "Drama": ["Wonder", "Culpa de las estrellas", "Querido Evan Hansen"],
+    "Comedia": ["Mean Girls", "Superbad", "Ladybird"],
+    "Musical": ["High School Musical", "Pitch Perfect", "Camp Rock"],
+    "Crimen": ["Escape Room", "Spider-Man: Un nuevo universo", "Búsqueda implacable"]
+  },
+  "18+": {
+    "Drama": ["El Padrino II", "Forrest Gump", "Parásitos"],
+    "Comedia": ["¿Qué pasó ayer?", "Ted", "Una loca película de miedo"],
+    "Musical": ["La La Land", "Bohemian Rhapsody", "El gran showman"],
+    "Crimen": ["The Godfather", "Pulp Fiction", "Seven"]
+  }
+}
